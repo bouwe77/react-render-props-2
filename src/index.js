@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 
 function App() {
   const [on, setOn] = useState(false);
@@ -11,16 +12,22 @@ function App() {
 
   return (
     <form onSubmit={save}>
-      <Toggle render={renderToggleCheckbox} on={on} toggle={setOn} />
+      <Toggle render={renderToggleCheckbox} toggle={setOn} on={on} />
       <br />
       <button type="submit">Save</button>
     </form>
   );
 }
 
-function Toggle({ render, toggle, on }) {
+function Toggle({ render, toggle, on = false }) {
   return <>{render(() => toggle(!on), on)}</>;
 }
+
+Toggle.propTypes = {
+  render: PropTypes.func.isRequired,
+  toggle: PropTypes.func.isRequired,
+  on: PropTypes.bool
+};
 
 function renderToggleCheckbox(toggle, on) {
   return (
